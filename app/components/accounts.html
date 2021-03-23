@@ -1,0 +1,45 @@
+<div class="row tab-content">
+    <div class="col-md-12">
+        <div class="ajax-loader">
+            <img ng-src="images/ajax-loader-modern.gif" ng-if="$ctrl.loading" />
+        </div>
+        <table class="table table-striped provider-table" ng-if="$ctrl.accounts && $ctrl.accounts.length > 0">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Provider Category</th>
+                    <th>Last Refresh (local)</th>
+                    <th>Last Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="account in $ctrl.accounts">
+                    <td>
+                        <img class="provider-logo" ng-src="{{$ctrl.apiUrl}}externalaccountproviders/{{account.provider.id}}/logo" alt="{{provider.name}} logo" />
+                    </td>
+                    <td>{{account.id}}</td>
+                    <td>{{account.provider.name}}</td>
+                    <td>{{account.provider.category}}</td>
+                    <td>{{account.lastRefreshDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{account.status}}</td>
+                    <td>
+                        <button type="button" class="btn btn-success" ng-click="$ctrl.fetchAccountData(account)">
+                            <span class="fa fa-refresh lighter"></span>
+                            Refresh Data
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" ng-click="$ctrl.deleteAccount(account.id)" title="Delete External Account">
+                            <span class="fa fa-trash-o lighter"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>

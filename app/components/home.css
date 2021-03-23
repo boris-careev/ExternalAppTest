@@ -1,0 +1,15 @@
+h3 {
+    text-align: center;
+}
+
+button.selected {
+    background-color: #fff;
+}
+
+.top-actions-links {
+    margin-bottom: 15px;
+}
+
+.nav-item {
+    font-weight: bold;
+}

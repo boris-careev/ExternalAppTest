@@ -1,0 +1,12 @@
+
+ .provider-table {
+    width: 85%;
+}
+
+.provider-table td {
+    vertical-align: middle !important;
+}
+
+.provider-logo {
+    height: 50px;
+}

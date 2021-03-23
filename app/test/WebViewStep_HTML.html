@@ -1,0 +1,70 @@
+<html>
+<head>
+</head>
+<body>
+    <div>Web View Step Example</div>
+    <div>
+      	<label>Account ID to delete (will work only if current user owns the account)</label>
+        <input id="accountID" type="text" />
+      	<button onclick="deleteProviderAccount()">Delete Provider Account</button>
+    </div>
+    <div id="result">
+    </div>
+    <script>
+        function deleteProviderAccount(accountID) {
+            var resultElement = document.getElementById("result");
+            
+            /*DEBUG*/resultElement.innerHTML += "deleteProviderAccount() starting...<br/>";
+
+            var currentMessageID = 0;
+            var messageHandlers = [];
+            var nextMessageID = function () {
+                return currentMessageID++;
+            };
+
+            var setActionResult = function (data) {
+                /*DEBUG*/resultElement.innerHTML += `calling messageHandlers[${data.messageID}](data)<br/>`;
+                messageHandlers[data.messageID](data);
+            };
+
+            var receiveWindowMessage = function (message) {
+                /*DEBUG*/resultElement.innerHTML += "receiveWindowMessage() starting... <br/>";
+                setActionResult(message.data);
+            };
+            window.addEventListener("message", receiveWindowMessage, false);
+
+            var deleteProviderAccountExecute = function () {
+                return new Promise(function (resolve, reject) {
+                    var accountID = document.getElementById("accountID").value;
+                    var messageID = nextMessageID();
+                    
+                    /*DEBUG*/resultElement.innerHTML += `messageID = ${messageID}<br/>`;
+
+                    messageHandlers[messageID] = function (deleteProviderAccountResponse) {
+                        if (deleteProviderAccountResponse.message) {
+                            resultElement.innerHTML += `deleteProviderAccountResponse.success = ${deleteProviderAccountResponse.success}<br/>`;
+                            resultElement.innerHTML += `deleteProviderAccountResponse.message = ${deleteProviderAccountResponse.message}<br/>`;
+                            reject(deleteProviderAccountResponse);
+                        }
+                        else {
+                            resultElement.innerHTML += `deleteProviderAccountResponse.success = ${deleteProviderAccountResponse.success}<br/>`;
+                            resolve(deleteProviderAccountResponse);
+                        }
+                    };
+
+                    if (window.webkit.messageHandlers.DeleteProviderAccount) {
+                        window.webkit.messageHandlers.DeleteProviderAccount.postMessage({ messageID: messageID, accountID: accountID });
+                    } else {
+                        reject();
+                    }
+                });
+            };
+
+            deleteProviderAccountExecute()
+                .then(function () {
+                    /*DEBUG*/resultElement.innerHTML += "Call to DeleteProviderAccount completed!<br/>";
+                });
+        }
+    </script>
+</body>
+</html>

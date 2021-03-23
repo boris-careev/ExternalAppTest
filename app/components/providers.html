@@ -1,0 +1,36 @@
+<div class="row tab-content">
+    <div class="col-md-4">
+        <input type="text" ng-model="$ctrl.searchText" class="form-control" id="providerSerachText" placeholder="Search Providers" ng-change="$ctrl.getProviders()" ng-model-options='{ debounce: 1000 }'>
+    </div>    
+    <div class="col-md-8">
+    </div>
+    <div class="col-md-12">
+        <div class="ajax-loader">
+            <img ng-src="images/ajax-loader-modern.gif" ng-if="$ctrl.loading" />
+        </div>
+        <table class="table table-striped provider-table" ng-if="$ctrl.providers && $ctrl.providers.length > 0">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="provider in $ctrl.providers">
+                    <td>
+                        <img class="provider-logo" ng-src="{{$ctrl.apiUrl}}externalaccountproviders/{{provider.id}}/logo" alt="{{provider.name}} logo" />
+                    </td>
+                    <td>{{provider.id}}</td>
+                    <td>{{provider.name}}</td>
+                    <td>{{provider.category}}</td>
+                    <td>
+                        <button class="btn btn-success" ng-click="$ctrl.connectExternalAccount(provider.id)">Connect External Account</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
