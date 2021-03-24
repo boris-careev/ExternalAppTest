@@ -5,8 +5,8 @@
         
 		//var hostBaseUrl = "http://localhost:64531/WebClient/";
 		//var hostBaseUrl = "http://localhost/WebClientTest.Adapter1.WebClient/";
-		var hostBaseUrl = "https://mdhorg.ce.dev/MyDataHelps/";
-		//var hostBaseUrl = "https://rkstudio.careevolution.dev/inv/"
+		//var hostBaseUrl = "https://mdhorg.ce.dev/MyDataHelps/";
+		var hostBaseUrl = "https://rkstudio.careevolution.dev/inv/"
 
 		var baseUrl = MyDataHelps.baseUrl;
 		var apiUrl = hostBaseUrl + "api/v1/delegated/";
